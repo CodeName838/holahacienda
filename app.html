@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hola Hacienda · Demo funcional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFAF7;
+  --bg-soft:#F4F1EA;
+  --ink:#1A1A1A;
+  --ink-soft:#4A4A4A;
+  --ink-mute:#7A7A7A;
+  --line:#E6E2D8;
+  --green:#2D7D5A;
+  --green-dark:#1F5C42;
+  --green-soft:#E8F2EC;
+  --amber:#F4E4BC;
+  --amber-dark:#8A6B1F;
+  --red:#A33;
+  --red-soft:#FFE8E8;
+  --shadow:0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(26,26,26,.06);
+  --shadow-lg:0 4px 12px rgba(0,0,0,.06), 0 20px 40px rgba(26,26,26,.08);
+  --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);color:var(--ink);font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+}
+.container{max-width:880px;margin:0 auto;padding:32px 24px}
+
+header{padding:16px 0;border-bottom:1px solid var(--line);background:var(--bg)}
+.nav{display:flex;align-items:center;justify-content:space-between;max-width:880px;margin:0 auto;padding:0 24px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--ink);text-decoration:none}
+.logo-mark{width:32px;height:32px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.demo-badge{
+  background:var(--amber);color:var(--amber-dark);padding:6px 14px;
+  border-radius:999px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+}
+.api-status{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-mute);cursor:pointer;user-select:none}
+.api-status .dot{width:8px;height:8px;border-radius:50%;background:#ccc}
+.api-status.ok .dot{background:var(--green)}
+
+.setup-card{
+  max-width:560px;margin:48px auto;background:white;
+  border-radius:var(--radius);box-shadow:var(--shadow-lg);
+  border:1px solid var(--line);overflow:hidden;
+}
+.setup-header{padding:32px 32px 0;text-align:center}
+.setup-icon{width:64px;height:64px;background:var(--green-soft);border-radius:16px;
+  display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 18px}
+.setup-card h2{font-size:24px;font-weight:800;margin-bottom:8px}
+.setup-card .sub{color:var(--ink-soft);font-size:15px;margin-bottom:28px}
+.setup-body{padding:0 32px 32px}
+.setup-body label{display:block;font-weight:600;font-size:13px;margin-bottom:8px;color:var(--ink)}
+.input-wrap{position:relative}
+.setup-body input[type=text]{
+  width:100%;padding:14px 16px;padding-right:80px;border:1.5px solid var(--line);
+  border-radius:10px;font-size:14px;font-family:'Monaco',monospace;
+  background:white;transition:border-color .15s;color:var(--ink);
+}
+.setup-body input[type=text]:focus{outline:none;border-color:var(--green);background:white}
+.toggle-pwd{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  background:var(--bg-soft);border:none;padding:6px 10px;border-radius:6px;
+  font-size:12px;cursor:pointer;font-family:inherit;color:var(--ink-soft);font-weight:600;
+}
+.toggle-pwd:hover{background:var(--line)}
+.setup-help{
+  background:var(--bg-soft);padding:16px;border-radius:10px;
+  font-size:13px;color:var(--ink-soft);margin-top:16px;line-height:1.6;
+}
+.setup-help a{color:var(--green-dark);font-weight:600}
+.setup-help strong{color:var(--ink)}
+.setup-body button.primary{
+  width:100%;background:var(--green);color:white;border:none;
+  padding:14px 24px;border-radius:10px;font-weight:700;font-size:15px;
+  cursor:pointer;font-family:inherit;margin-top:20px;transition:background .15s;
+}
+.setup-body button.primary:hover{background:var(--green-dark)}
+.setup-body button.primary:disabled{background:#ccc;cursor:not-allowed}
+.error-inline{
+  background:var(--red-soft);color:var(--red);padding:10px 14px;
+  border-radius:8px;font-size:13px;margin-top:12px;display:none;
+}
+.error-inline.show{display:block}
+
+.app-intro{text-align:center;margin-bottom:32px}
+.app-intro h1{font-size:32px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.app-intro p{color:var(--ink-soft);font-size:16px}
+
+.input-card{
+  background:white;border-radius:var(--radius);box-shadow:var(--shadow);
+  border:1px solid var(--line);padding:24px;margin-bottom:24px;
+}
+.tab-row{display:flex;gap:8px;margin-bottom:16px;border-bottom:1px solid var(--line)}
+.tab{padding:10px 16px;font-size:14px;font-weight:600;color:var(--ink-mute);
+  cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
+  background:none;border-left:none;border-right:none;border-top:none;font-family:inherit;}
+.tab.active{color:var(--green-dark);border-bottom-color:var(--green)}
+textarea{
+  width:100%;min-height:200px;padding:16px;border:1.5px solid var(--line);
+  border-radius:10px;font-family:inherit;font-size:14px;line-height:1.6;
+  resize:vertical;background:var(--bg);transition:border-color .15s;
+}
+textarea:focus{outline:none;border-color:var(--green)}
+.file-drop{
+  border:2px dashed var(--line);border-radius:10px;padding:40px 20px;
+  text-align:center;cursor:pointer;transition:border-color .15s, background .15s;
+  display:block;
+}
+.file-drop:hover{border-color:var(--green);background:var(--green-soft)}
+.file-drop.has-file{border-style:solid;border-color:var(--green);background:var(--green-soft)}
+.file-drop input{display:none}
+.file-drop .icon{font-size:32px;margin-bottom:8px}
+.file-drop p{color:var(--ink-soft);font-size:14px}
+.file-drop .filename{color:var(--green-dark);font-weight:600;margin-top:8px}
+.pdf-notice{
+  background:var(--amber);color:var(--amber-dark);
+  padding:8px 12px;border-radius:6px;font-size:12px;margin-top:8px;display:none;
+}
+.pdf-notice.show{display:block}
+
+.action-row{display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:16px;flex-wrap:wrap}
+.char-count{font-size:13px;color:var(--ink-mute);margin-top:8px}
+.btn-translate{
+  background:var(--green);color:white;border:none;padding:14px 28px;
+  border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;
+  font-family:inherit;transition:all .15s;display:flex;align-items:center;gap:8px;
+  box-shadow:0 4px 14px rgba(45,125,90,.3);
+}
+.btn-translate:hover:not(:disabled){background:var(--green-dark);transform:translateY(-1px)}
+.btn-translate:disabled{background:#ccc;cursor:not-allowed;box-shadow:none}
+
+.loading{
+  text-align:center;padding:60px 24px;background:white;
+  border-radius:var(--radius);box-shadow:var(--shadow);
+  border:1px solid var(--line);margin-bottom:24px;
+}
+.spinner{
+  width:48px;height:48px;border:4px solid var(--line);
+  border-top-color:var(--green);border-radius:50%;
+  margin:0 auto 20px;animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-msg{font-size:15px;color:var(--ink-soft);font-weight:500}
+
+.result-card{
+  background:white;border-radius:var(--radius);box-shadow:var(--shadow);
+  border:1px solid var(--line);padding:32px;margin-bottom:24px;
+}
+.result-card h2{
+  font-size:20px;font-weight:700;margin-top:24px;margin-bottom:12px;
+}
+.result-card h2:first-child{margin-top:0}
+.result-card p{margin-bottom:12px;color:var(--ink-soft);line-height:1.6}
+.result-card strong{color:var(--ink)}
+.result-card ul,.result-card ol{margin-left:24px;margin-bottom:12px;color:var(--ink-soft)}
+.result-card li{margin-bottom:6px}
+.result-card hr{border:none;border-top:1px solid var(--line);margin:24px 0}
+.result-card code{
+  background:var(--bg-soft);padding:2px 6px;border-radius:4px;
+  font-family:'Monaco',monospace;font-size:13px;color:var(--amber-dark);
+}
+
+.result-actions{
+  display:flex;gap:12px;margin-top:24px;padding-top:20px;
+  border-top:1px solid var(--line);flex-wrap:wrap;
+}
+.btn-secondary{
+  background:white;color:var(--ink);border:1.5px solid var(--line);
+  padding:10px 18px;border-radius:8px;font-weight:600;font-size:14px;
+  cursor:pointer;font-family:inherit;transition:border-color .15s;
+}
+.btn-secondary:hover{border-color:var(--ink)}
+
+.error-card{
+  background:var(--red-soft);border:1px solid var(--red);
+  padding:20px;border-radius:10px;margin-bottom:24px;
+}
+.error-card h3{color:var(--red);font-size:15px;margin-bottom:8px}
+.error-card p{color:var(--ink);font-size:14px;line-height:1.5}
+
+footer{
+  text-align:center;padding:32px 24px;color:var(--ink-mute);
+  font-size:12px;border-top:1px solid var(--line);margin-top:48px;
+}
+footer strong{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="#" class="logo">
+      <div class="logo-mark">👋</div>
+      <span>Hola Hacienda</span>
+      <span class="demo-badge">Demo</span>
+    </a>
+    <div class="api-status" id="apiStatus">
+      <div class="dot"></div>
+      <span id="apiStatusText">Sin API key</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- SETUP SCREEN -->
+  <div id="setup" class="setup-card">
+    <div class="setup-header">
+      <div class="setup-icon">🔑</div>
+      <h2>Configuración inicial</h2>
+      <p class="sub">Solo la primera vez. Tu API key se guarda únicamente en este navegador.</p>
+    </div>
+    <form class="setup-body" id="setupForm" autocomplete="off" onsubmit="return false;">
+      <label for="apikey">API key de Anthropic</label>
+      <div class="input-wrap">
+        <input
+          type="text"
+          id="apikey"
+          name="apikey"
+          placeholder="sk-ant-api03-..."
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          inputmode="text">
+        <button type="button" class="toggle-pwd" id="togglePwd">Ocultar</button>
+      </div>
+      <div class="error-inline" id="setupError"></div>
+      <div class="setup-help">
+        <strong>¿Cómo conseguir una API key (3 minutos)?</strong><br>
+        1. Entra en <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> y crea cuenta.<br>
+        2. Te dan <strong>5 $ gratis</strong> de crédito al verificar el teléfono.<br>
+        3. Ve a <strong>Settings → API Keys</strong> y dale a "Create Key".<br>
+        4. Copia la clave (empieza por <code>sk-ant-</code>) y pégala arriba.
+      </div>
+      <button type="submit" class="primary" id="btnSave">Guardar y empezar a probar</button>
+    </form>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app" style="display:none">
+    <div class="app-intro">
+      <h1>Sube tu notificación oficial</h1>
+      <p>Pega el texto o sube un PDF. Te lo traducimos en menos de 30 segundos.</p>
+    </div>
+
+    <div class="input-card">
+      <div class="tab-row">
+        <button class="tab active" data-tab="text" type="button">📝 Pegar texto</button>
+        <button class="tab" data-tab="file" type="button">📎 Subir archivo</button>
+      </div>
+
+      <div id="tab-text">
+        <textarea id="textInput" placeholder="Pega aquí el texto de tu carta de Hacienda, Seguridad Social, BOE..."></textarea>
+        <div class="char-count" id="charCount">0 caracteres</div>
+      </div>
+
+      <div id="tab-file" style="display:none">
+        <label class="file-drop" id="fileDrop" for="fileInput">
+          <input type="file" id="fileInput" accept=".pdf,.txt">
+          <div class="icon">📎</div>
+          <p><strong>Arrastra tu archivo aquí o pulsa para elegir</strong></p>
+          <p style="font-size:12px;margin-top:4px">PDF o TXT, máx. 5 MB</p>
+          <div class="filename" id="fileName"></div>
+        </label>
+        <div class="pdf-notice" id="pdfNotice">⚠️ Lectura de PDFs no disponible. Pega el texto directamente o sube un .txt.</div>
+      </div>
+
+      <div class="action-row">
+        <span style="font-size:13px;color:var(--ink-mute)">🔒 Procesado en local, no guardamos nada.</span>
+        <button class="btn-translate" id="btnTranslate" type="button" disabled>
+          <span>Traducir notificación</span>
+          <span>→</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="loading" id="loading" style="display:none">
+      <div class="spinner"></div>
+      <div class="loading-msg" id="loadingMsg">Leyendo tu documento...</div>
+    </div>
+
+    <div class="error-card" id="errorCard" style="display:none">
+      <h3>⚠️ Algo ha fallado</h3>
+      <p id="errorMsg"></p>
+    </div>
+
+    <div class="result-card" id="result" style="display:none">
+      <div id="resultContent"></div>
+      <div class="result-actions">
+        <button class="btn-secondary" id="btnCopy" type="button">📋 Copiar al portapapeles</button>
+        <button class="btn-secondary" id="btnReset" type="button">🔄 Traducir otra</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p><strong>Hola Hacienda</strong> · Demo funcional · Hecho en España</p>
+  <p style="margin-top:8px">Este demo usa tu propia API key de Anthropic. Para producción, el backend gestionará las claves.</p>
+</footer>
+
+<script>
+'use strict';
+
+// =========================================================================
+// CRITICAL: la API key y el setup tienen que funcionar SIEMPRE,
+// independientemente de si las librerías externas (pdf.js, marked) cargan.
+// =========================================================================
+
+const TODAY = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+const SYSTEM_PROMPT = `# ROL
+Eres "Hola Hacienda", un asistente experto en derecho administrativo, fiscal y laboral español. Tu misión es traducir notificaciones oficiales (AEAT, Seguridad Social, BOE, DGT, ayuntamientos, juzgados) a un español claro y accionable para autónomos y PYMES sin formación legal.
+
+# AUDIENCIA
+Un autónomo o pequeño empresario español, asustado, con prisa, sin conocimientos jurídicos. Nivel lector equivalente a ESO terminada.
+
+# CONTEXTO TEMPORAL
+La fecha de hoy es ${TODAY}. Úsala para calcular días hábiles restantes.
+
+# REGLAS DE ESTILO (INNEGOCIABLES)
+1. Prohibido usar tecnicismos sin traducirlos. Si aparece "providencia de apremio", explícalo entre paréntesis la primera vez: "(es una orden de cobro urgente)".
+2. Frases cortas, máximo 20 palabras por frase.
+3. Voz activa, segunda persona ("tienes que pagar"), nunca "se procederá a".
+4. Cero ambigüedad. Si el documento no dice algo, escribe "El documento no lo indica" en vez de inventar.
+5. Tono calmado y profesional, nunca alarmista. El usuario ya está nervioso.
+6. Cero emojis salvo los marcadores fijos de la plantilla.
+
+# FORMATO DE SALIDA OBLIGATORIO (Markdown)
+
+## 🟢 En una frase
+[Resumen del documento en una sola frase de máximo 25 palabras.]
+
+## 📄 ¿Qué significa esto?
+[3 a 6 frases explicando qué organismo te escribe, por qué, y qué situación describe. Sin jerga.]
+
+## 💶 ¿Tengo que pagar algo?
+- **Importe:** [cantidad exacta en euros o "No procede pago"]
+- **Concepto:** [qué se paga]
+- **Cómo pagar:** [vía exacta: modelo, NRC, sede electrónica, cuenta, carta de pago]
+- **Recargos si te retrasas:** [%, si el documento los menciona]
+
+## 📅 Fecha límite
+- **Fecha exacta:** [DD/MM/AAAA o "No se especifica"]
+- **Días hábiles que te quedan desde hoy:** [calcular contra la fecha de hoy ${TODAY}]
+- **Cómo se cuenta el plazo:** [hábiles, naturales, desde notificación, etc.]
+
+## ⚠️ ¿Qué pasa si no haces nada?
+[Consecuencias concretas y graduales: recargo del X%, vía de apremio, embargo, sanción de Y euros. Solo lo que el documento permita deducir.]
+
+## ✅ Tus 3 próximos pasos
+1. [Acción concreta y verificable]
+2. [Acción concreta y verificable]
+3. [Acción concreta y verificable]
+
+## 🔎 Datos clave detectados
+- Organismo emisor:
+- Nº de expediente / referencia:
+- NIF del destinatario:
+- Fecha del documento:
+
+---
+**Aviso legal:** Esta traducción es una ayuda informativa generada por inteligencia artificial. No constituye asesoramiento jurídico, fiscal ni laboral, y no sustituye la consulta con un abogado, asesor fiscal o gestor colegiado. Antes de tomar decisiones con consecuencias económicas o legales, verifica la información con un profesional o directamente en la sede electrónica del organismo emisor. Hola Hacienda no se responsabiliza de las decisiones tomadas en base a este resumen.
+
+# CASOS LÍMITE
+- Si el texto no es una notificación oficial española, responde: "Este documento no parece una notificación oficial española. Solo puedo ayudarte con comunicaciones de AEAT, Seguridad Social, BOE, DGT, juzgados o administraciones públicas españolas."
+- Si el texto está incompleto o ilegible, indícalo en cada sección afectada con "Información no disponible en el fragmento recibido".
+- Si detectas datos sensibles (NIF, IBAN, dirección), inclúyelos en "Datos clave" pero nunca los repitas en el cuerpo del texto.`;
+
+// =========================================================================
+// ESTADO
+// =========================================================================
+let apiKey = '';
+let currentTab = 'text';
+let fileText = '';
+let pdfReady = false;
+
+try {
+  apiKey = localStorage.getItem('hh_apikey') || '';
+} catch (e) {
+  console.warn('localStorage no disponible:', e);
+}
+
+// =========================================================================
+// HELPERS
+// =========================================================================
+function $(id) { return document.getElementById(id); }
+
+function showError(id, msg) {
+  const el = $(id);
+  if (el) {
+    el.textContent = msg;
+    el.classList.add('show');
+    el.style.display = 'block';
+  }
+}
+
+function hideError(id) {
+  const el = $(id);
+  if (el) {
+    el.classList.remove('show');
+    el.style.display = 'none';
+  }
+}
+
+function showApp() {
+  $('setup').style.display = 'none';
+  $('app').style.display = 'block';
+  updateApiStatus();
+}
+
+function showSetup() {
+  $('app').style.display = 'none';
+  $('setup').style.display = 'block';
+  setTimeout(() => $('apikey').focus(), 100);
+}
+
+function updateApiStatus() {
+  const el = $('apiStatus');
+  const txt = $('apiStatusText');
+  if (!el || !txt) return;
+  if (apiKey) {
+    el.classList.add('ok');
+    txt.textContent = 'API key configurada (clic para cambiar)';
+  } else {
+    el.classList.remove('ok');
+    txt.textContent = 'Sin API key';
+  }
+}
+
+// =========================================================================
+// SETUP / API KEY
+// =========================================================================
+function saveKey() {
+  const input = $('apikey');
+  const key = (input.value || '').trim();
+
+  hideError('setupError');
+
+  if (!key) {
+    showError('setupError', 'Pega tu API key antes de guardar.');
+    input.focus();
+    return;
+  }
+  if (!key.startsWith('sk-ant-')) {
+    showError('setupError', 'La API key debe empezar por "sk-ant-". Revisa que la has copiado entera.');
+    input.focus();
+    return;
+  }
+  if (key.length < 40) {
+    showError('setupError', 'La API key parece incompleta. Debe tener al menos 40 caracteres.');
+    input.focus();
+    return;
+  }
+
+  try {
+    localStorage.setItem('hh_apikey', key);
+  } catch (e) {
+    console.warn('No se pudo guardar en localStorage:', e);
+  }
+  apiKey = key;
+  showApp();
+}
+
+function resetKey() {
+  if (!confirm('¿Quitar la API key guardada? Tendrás que volver a introducirla.')) return;
+  try { localStorage.removeItem('hh_apikey'); } catch (e) {}
+  apiKey = '';
+  $('apikey').value = '';
+  showSetup();
+}
+
+// =========================================================================
+// TABS
+// =========================================================================
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.tab === tab);
+  });
+  $('tab-text').style.display = tab === 'text' ? 'block' : 'none';
+  $('tab-file').style.display = tab === 'file' ? 'block' : 'none';
+  if (tab === 'file' && !pdfReady) {
+    $('pdfNotice').classList.add('show');
+  }
+  updateBtn();
+}
+
+function updateBtn() {
+  const text = $('textInput').value || '';
+  $('charCount').textContent = text.length + ' caracteres';
+  const hasContent = currentTab === 'text' ? text.trim().length > 30 : fileText.length > 0;
+  $('btnTranslate').disabled = !hasContent;
+}
+
+// =========================================================================
+// FILES
+// =========================================================================
+async function handleFile(file) {
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) {
+    showAppError('El archivo supera los 5 MB. Prueba con uno más pequeño o pega el texto directamente.');
+    return;
+  }
+  $('fileName').textContent = file.name;
+  $('fileDrop').classList.add('has-file');
+
+  try {
+    if (file.name.toLowerCase().endsWith('.pdf')) {
+      if (!pdfReady || typeof pdfjsLib === 'undefined') {
+        showAppError('La lectura de PDFs no está disponible en este momento. Por favor, copia el texto del PDF y pégalo en la pestaña "Pegar texto".');
+        return;
+      }
+      $('fileName').textContent = file.name + ' (extrayendo texto...)';
+      fileText = await extractPdf(file);
+    } else {
+      fileText = await file.text();
+    }
+    if (fileText.trim().length < 30) {
+      showAppError('No he podido extraer texto útil del archivo. Si es un PDF escaneado sin OCR, copia el texto manualmente.');
+      fileText = '';
+      $('fileName').textContent = '';
+      $('fileDrop').classList.remove('has-file');
+      return;
+    }
+    $('fileName').textContent = file.name + ' · ' + fileText.length + ' caracteres extraídos';
+    updateBtn();
+  } catch (err) {
+    showAppError('Error leyendo el archivo: ' + err.message);
+    fileText = '';
+  }
+}
+
+async function extractPdf(file) {
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+  let text = '';
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    text += content.items.map(it => it.str).join(' ') + '\n\n';
+  }
+  return text;
+}
+
+// =========================================================================
+// TRADUCCIÓN
+// =========================================================================
+const LOADING_MESSAGES = [
+  'Leyendo tu documento...',
+  'Identificando el organismo emisor...',
+  'Calculando plazos y fechas límite...',
+  'Buscando importes y conceptos...',
+  'Redactando en español claro...',
+  'Casi listo, dando los últimos retoques...'
+];
+
+let loadingInterval = null;
+
+function showAppError(msg) {
+  $('errorMsg').textContent = msg;
+  $('errorCard').style.display = 'block';
+  $('loading').style.display = 'none';
+}
+
+async function translate() {
+  const text = currentTab === 'text' ? $('textInput').value : fileText;
+  if (!text || text.trim().length < 30) return;
+
+  $('errorCard').style.display = 'none';
+  $('result').style.display = 'none';
+  $('loading').style.display = 'block';
+  $('btnTranslate').disabled = true;
+
+  let i = 0;
+  $('loadingMsg').textContent = LOADING_MESSAGES[0];
+  loadingInterval = setInterval(() => {
+    i = (i + 1) % LOADING_MESSAGES.length;
+    $('loadingMsg').textContent = LOADING_MESSAGES[i];
+  }, 2500);
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 4096,
+        system: SYSTEM_PROMPT,
+        messages: [{ role: 'user', content: text }]
+      })
+    });
+
+    clearInterval(loadingInterval);
+
+    if (!response.ok) {
+      let errMsg = 'HTTP ' + response.status;
+      try {
+        const errData = await response.json();
+        if (errData.error && errData.error.message) errMsg = errData.error.message;
+      } catch (e) {}
+      throw new Error(errMsg);
+    }
+
+    const data = await response.json();
+    const markdown = (data.content || []).find(b => b.type === 'text')?.text || '';
+
+    $('loading').style.display = 'none';
+
+    let html;
+    if (typeof marked !== 'undefined' && marked.parse) {
+      html = marked.parse(markdown);
+    } else {
+      html = '<pre style="white-space:pre-wrap;font-family:inherit">' +
+             markdown.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])) +
+             '</pre>';
+    }
+    $('resultContent').innerHTML = html;
+    $('result').style.display = 'block';
+    $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (err) {
+    clearInterval(loadingInterval);
+    $('loading').style.display = 'none';
+    let friendly = err.message || 'Error desconocido';
+    const m = (err.message || '').toLowerCase();
+    if (m.includes('401') || m.includes('authentication') || m.includes('invalid api key')) {
+      friendly = 'La API key no es válida. Revisa que la has copiado entera desde console.anthropic.com.';
+    } else if (m.includes('429') || m.includes('rate')) {
+      friendly = 'Has hecho demasiadas peticiones. Espera 1 minuto y vuelve a probar.';
+    } else if (m.includes('credit') || m.includes('billing') || m.includes('insufficient')) {
+      friendly = 'No tienes crédito en tu cuenta de Anthropic. Añade fondos en console.anthropic.com.';
+    } else if (m.includes('failed to fetch') || m.includes('network')) {
+      friendly = 'No he podido conectar con la API. Esto suele ocurrir si abres el archivo directamente como file://. Prueba a usar el servidor local o despliega en Vercel.';
+    } else if (m.includes('cors')) {
+      friendly = 'Error de CORS. Abre la página desde un servidor web (Live Server, Vercel, etc.) en vez de doble clic al archivo.';
+    }
+    showAppError(friendly);
+  } finally {
+    $('btnTranslate').disabled = false;
+  }
+}
+
+function copyResult() {
+  const text = $('resultContent').innerText;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(
+      () => alert('Resultado copiado al portapapeles.'),
+      () => alert('No se pudo copiar. Selecciona el texto manualmente.')
+    );
+  }
+}
+
+function resetApp() {
+  $('result').style.display = 'none';
+  $('errorCard').style.display = 'none';
+  $('textInput').value = '';
+  $('fileInput').value = '';
+  $('fileName').textContent = '';
+  $('fileDrop').classList.remove('has-file');
+  fileText = '';
+  updateBtn();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// =========================================================================
+// INICIALIZACIÓN: SE HACE CUANDO EL DOM ESTÁ LISTO
+// =========================================================================
+function init() {
+  // Decidir pantalla inicial
+  if (apiKey) {
+    showApp();
+  } else {
+    showSetup();
+  }
+
+  // Formulario de setup (botón + Enter)
+  const form = $('setupForm');
+  if (form) {
+    form.addEventListener('submit', e => { e.preventDefault(); saveKey(); });
+  }
+  $('btnSave').addEventListener('click', e => { e.preventDefault(); saveKey(); });
+
+  // Toggle ver/ocultar API key
+  $('togglePwd').addEventListener('click', () => {
+    const input = $('apikey');
+    const btn = $('togglePwd');
+    if (input.type === 'text') {
+      input.type = 'password';
+      btn.textContent = 'Mostrar';
+    } else {
+      input.type = 'text';
+      btn.textContent = 'Ocultar';
+    }
+  });
+
+  // Empieza oculta por defecto, mejor UX
+  $('apikey').type = 'password';
+  $('togglePwd').textContent = 'Mostrar';
+
+  // Click en estado de API key arriba a la derecha
+  $('apiStatus').addEventListener('click', resetKey);
+
+  // Eventos de la app
+  $('textInput').addEventListener('input', updateBtn);
+  $('fileInput').addEventListener('change', e => handleFile(e.target.files[0]));
+  $('btnTranslate').addEventListener('click', translate);
+  $('btnCopy').addEventListener('click', copyResult);
+  $('btnReset').addEventListener('click', resetApp);
+
+  // Tabs
+  document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => switchTab(t.dataset.tab));
+  });
+
+  // Drag & drop
+  const drop = $('fileDrop');
+  if (drop) {
+    drop.addEventListener('dragover', e => { e.preventDefault(); drop.style.borderColor = 'var(--green)'; });
+    drop.addEventListener('dragleave', () => { drop.style.borderColor = ''; });
+    drop.addEventListener('drop', e => {
+      e.preventDefault();
+      drop.style.borderColor = '';
+      if (e.dataTransfer.files.length > 0) {
+        handleFile(e.dataTransfer.files[0]);
+      }
+    });
+  }
+
+  updateApiStatus();
+  console.log('[Hola Hacienda] Demo inicializado correctamente.');
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+// =========================================================================
+// CARGA DIFERIDA Y NO BLOQUEANTE DE pdf.js Y marked
+// (si fallan, la app sigue funcionando, solo no procesa PDFs ni renderiza
+// markdown bonito)
+// =========================================================================
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.async = true;
+    s.onload = resolve;
+    s.onerror = () => reject(new Error('No se pudo cargar ' + src));
+    document.head.appendChild(s);
+  });
+}
+
+(async () => {
+  try {
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      pdfReady = true;
+      const notice = document.getElementById('pdfNotice');
+      if (notice) notice.classList.remove('show');
+      console.log('[Hola Hacienda] pdf.js cargado.');
+    }
+  } catch (e) {
+    console.warn('[Hola Hacienda] pdf.js no disponible:', e.message);
+  }
+
+  try {
+    await loadScript('https://cdn.jsdelivr.net/npm/marked/marked.min.js');
+    console.log('[Hola Hacienda] marked cargado.');
+  } catch (e) {
+    console.warn('[Hola Hacienda] marked no disponible, se mostrará texto plano:', e.message);
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hola Hacienda · Entiende tu carta oficial en 30 segundos</title>
+<meta name="description" content="Sube tu notificación de Hacienda, Seguridad Social o el BOE y te decimos en español claro qué significa, cuánto pagas y cuándo. Adiós a la ansiedad burocrática.">
+<meta property="og:title" content="Hola Hacienda, el traductor de burocracia">
+<meta property="og:description" content="Entiende cualquier carta oficial en 30 segundos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFAF7;
+  --bg-soft:#F4F1EA;
+  --ink:#1A1A1A;
+  --ink-soft:#4A4A4A;
+  --ink-mute:#7A7A7A;
+  --line:#E6E2D8;
+  --green:#2D7D5A;
+  --green-dark:#1F5C42;
+  --green-soft:#E8F2EC;
+  --amber:#F4E4BC;
+  --amber-dark:#8A6B1F;
+  --gold:#B8924A;
+  --shadow:0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(26,26,26,.06);
+  --shadow-lg:0 4px 12px rgba(0,0,0,.06), 0 20px 40px rgba(26,26,26,.08);
+  --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  font-size:18px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* HEADER */
+header{
+  padding:20px 0;
+  border-bottom:1px solid var(--line);
+  background:var(--bg);
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(8px);
+}
+.nav{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;color:var(--ink);text-decoration:none}
+.logo-mark{width:32px;height:32px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px}
+.nav-cta{
+  background:var(--ink);color:white;padding:10px 18px;border-radius:10px;
+  text-decoration:none;font-weight:600;font-size:14px;transition:transform .15s;
+}
+.nav-cta:hover{transform:translateY(-1px)}
+
+/* HERO */
+.hero{padding:72px 0 56px;text-align:center}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--amber);color:var(--amber-dark);
+  padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;
+  margin-bottom:28px;
+}
+.badge-dot{width:8px;height:8px;background:var(--amber-dark);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+h1{
+  font-size:clamp(36px,5.5vw,60px);font-weight:800;line-height:1.08;
+  letter-spacing:-.02em;margin-bottom:24px;
+}
+h1 .accent{color:var(--green);position:relative;white-space:nowrap}
+h1 .accent::after{
+  content:'';position:absolute;left:0;right:0;bottom:-4px;height:8px;
+  background:var(--amber);z-index:-1;opacity:.6;
+}
+.sub{
+  font-size:clamp(17px,2.2vw,21px);color:var(--ink-soft);
+  max-width:640px;margin:0 auto 40px;line-height:1.5;
+}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:16px 28px;border-radius:12px;font-weight:600;font-size:16px;
+  text-decoration:none;border:none;cursor:pointer;transition:transform .15s, box-shadow .15s;
+  font-family:inherit;
+}
+.btn-primary{background:var(--green);color:white;box-shadow:0 4px 14px rgba(45,125,90,.3)}
+.btn-primary:hover{transform:translateY(-2px);background:var(--green-dark);box-shadow:0 6px 20px rgba(45,125,90,.4)}
+.btn-secondary{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn-secondary:hover{border-color:var(--ink);transform:translateY(-1px)}
+.trust-row{
+  display:flex;align-items:center;justify-content:center;gap:18px;
+  color:var(--ink-mute);font-size:14px;flex-wrap:wrap;
+}
+.trust-row span{display:flex;align-items:center;gap:6px}
+
+/* DEMO PREVIEW */
+.demo{
+  margin:48px auto 0;max-width:880px;
+  background:white;border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);overflow:hidden;
+  border:1px solid var(--line);
+}
+.demo-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--bg-soft);border-bottom:1px solid var(--line)}
+.demo-tab{padding:14px;text-align:center;font-size:13px;font-weight:600;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.04em}
+.demo-tab.before{background:#FFF5F5;color:#A33}
+.demo-tab.after{background:var(--green-soft);color:var(--green-dark)}
+.demo-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.demo-col{padding:24px;font-size:13px;line-height:1.6;min-height:380px}
+.demo-col.before{
+  background:#FFFCFA;border-right:1px solid var(--line);
+  font-family:'Times New Roman',serif;color:#444;
+}
+.demo-col.after{background:white;color:var(--ink)}
+.demo-col.before p{margin-bottom:10px;font-size:11.5px;line-height:1.5}
+.demo-col.before strong{font-weight:700}
+.after-section{margin-bottom:18px}
+.after-section h4{font-size:13px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.after-section p{color:var(--ink-soft);font-size:13px}
+.after-section .key{color:var(--green-dark);font-weight:700}
+.amount{
+  display:inline-block;background:var(--amber);color:var(--amber-dark);
+  padding:2px 10px;border-radius:6px;font-weight:700;font-size:13px;
+}
+.deadline{
+  display:inline-block;background:#FFE8E8;color:#A33;
+  padding:2px 10px;border-radius:6px;font-weight:700;font-size:13px;
+}
+@media(max-width:720px){
+  .demo-body{grid-template-columns:1fr}
+  .demo-tabs{grid-template-columns:1fr 1fr}
+  .demo-col.before{border-right:none;border-bottom:1px solid var(--line);min-height:auto}
+  .demo-col{min-height:auto}
+}
+
+/* PROBLEM SECTION */
+.section{padding:80px 0;border-top:1px solid var(--line)}
+.section-label{
+  color:var(--green);font-weight:600;font-size:13px;text-transform:uppercase;
+  letter-spacing:.08em;margin-bottom:12px;text-align:center;
+}
+h2{
+  font-size:clamp(28px,4vw,40px);font-weight:800;line-height:1.15;
+  letter-spacing:-.015em;margin-bottom:18px;text-align:center;
+}
+.section-sub{
+  font-size:18px;color:var(--ink-soft);text-align:center;
+  max-width:600px;margin:0 auto 56px;
+}
+.problems{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.problem-card{
+  background:white;padding:32px 28px;border-radius:var(--radius);
+  border:1px solid var(--line);transition:transform .2s, box-shadow .2s;
+}
+.problem-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.problem-icon{
+  width:48px;height:48px;background:var(--amber);border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px;
+}
+.problem-card h3{font-size:18px;font-weight:700;margin-bottom:10px}
+.problem-card p{color:var(--ink-soft);font-size:15px;line-height:1.55}
+@media(max-width:720px){.problems{grid-template-columns:1fr}}
+
+/* HOW IT WORKS */
+.steps{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:32px;
+  position:relative;
+}
+.step{position:relative;text-align:center}
+.step-num{
+  width:56px;height:56px;background:var(--green);color:white;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:22px;margin:0 auto 20px;
+  box-shadow:0 4px 14px rgba(45,125,90,.3);
+}
+.step h3{font-size:20px;font-weight:700;margin-bottom:10px}
+.step p{color:var(--ink-soft);font-size:15px}
+@media(max-width:720px){.steps{grid-template-columns:1fr;gap:40px}}
+
+/* FUNDADOR OFFER */
+.fundador-section{
+  background:linear-gradient(180deg,var(--bg) 0%,var(--bg-soft) 100%);
+  padding:96px 0;border-top:1px solid var(--line);
+}
+.fundador-card{
+  max-width:560px;margin:0 auto;background:white;
+  border-radius:24px;box-shadow:var(--shadow-lg);
+  border:2px solid var(--gold);
+  overflow:hidden;position:relative;
+}
+.fundador-ribbon{
+  position:absolute;top:24px;right:-44px;
+  background:var(--gold);color:white;
+  padding:6px 60px;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;
+  transform:rotate(35deg);
+}
+.fundador-body{padding:44px 40px}
+.fundador-eyebrow{
+  color:var(--gold);font-weight:700;font-size:13px;
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;
+}
+.fundador-title{font-size:30px;font-weight:800;line-height:1.15;margin-bottom:14px}
+.fundador-desc{color:var(--ink-soft);font-size:15px;margin-bottom:28px}
+.price-row{
+  display:flex;align-items:baseline;gap:14px;margin-bottom:8px;
+}
+.price{font-size:54px;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+.price-old{font-size:18px;color:var(--ink-mute);text-decoration:line-through}
+.price-tag{font-size:14px;color:var(--ink-mute);margin-bottom:28px}
+.price-tag strong{color:var(--green-dark);font-weight:700}
+.features{list-style:none;margin-bottom:32px}
+.features li{
+  padding:10px 0;display:flex;align-items:flex-start;gap:12px;
+  font-size:15px;color:var(--ink-soft);border-bottom:1px solid var(--line);
+}
+.features li:last-child{border-bottom:none}
+.check{
+  flex-shrink:0;width:22px;height:22px;background:var(--green-soft);
+  color:var(--green-dark);border-radius:50%;display:flex;
+  align-items:center;justify-content:center;font-weight:800;font-size:12px;
+  margin-top:2px;
+}
+.spots{
+  background:var(--amber);color:var(--amber-dark);
+  padding:12px 16px;border-radius:10px;text-align:center;
+  font-weight:600;font-size:14px;margin-bottom:24px;
+}
+.spots-bar{
+  height:6px;background:rgba(138,107,31,.2);border-radius:3px;
+  margin-top:8px;overflow:hidden;
+}
+.spots-fill{height:100%;background:var(--amber-dark);width:23%;border-radius:3px}
+
+/* EMAIL CAPTURE */
+.email-form{display:flex;gap:8px;margin-bottom:14px}
+.email-form input{
+  flex:1;padding:16px 18px;border:1.5px solid var(--line);
+  border-radius:12px;font-size:15px;font-family:inherit;
+  background:var(--bg);transition:border-color .15s;
+}
+.email-form input:focus{outline:none;border-color:var(--green)}
+.email-form button{
+  background:var(--ink);color:white;border:none;padding:16px 24px;
+  border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;
+  font-family:inherit;white-space:nowrap;transition:background .15s;
+}
+.email-form button:hover{background:var(--green)}
+.form-note{font-size:12px;color:var(--ink-mute);text-align:center}
+
+/* FAQ */
+.faq{max-width:720px;margin:0 auto}
+.faq-item{
+  border-bottom:1px solid var(--line);padding:24px 0;
+  cursor:pointer;transition:background .15s;
+}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;
+  font-weight:600;font-size:17px;
+}
+.faq-q::after{content:'+';font-size:24px;color:var(--green);font-weight:400;transition:transform .2s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{
+  max-height:0;overflow:hidden;color:var(--ink-soft);
+  font-size:15px;line-height:1.6;transition:max-height .3s, margin-top .3s;
+}
+.faq-item.open .faq-a{max-height:300px;margin-top:14px}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--line);padding:40px 0;
+  text-align:center;color:var(--ink-mute);font-size:13px;
+}
+footer p{margin-bottom:8px}
+footer a{color:var(--ink-mute);text-decoration:none;margin:0 8px}
+footer a:hover{color:var(--green)}
+
+/* SUCCESS STATE */
+.success-msg{
+  display:none;background:var(--green-soft);color:var(--green-dark);
+  padding:20px;border-radius:12px;text-align:center;font-weight:600;
+}
+.success-msg.show{display:block}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav class="nav">
+      <a href="#" class="logo">
+        <div class="logo-mark">👋</div>
+        <span>Hola Hacienda</span>
+      </a>
+      <a href="#fundador" class="nav-cta">Reservar plaza Fundador</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      <span>Lanzamiento exclusivo, solo 100 plazas Fundador</span>
+    </div>
+    <h1>Saluda a Hacienda<br>sin <span class="accent">miedo</span>.</h1>
+    <p class="sub">
+      Sube la carta de la AEAT, Seguridad Social o el BOE, y en 30 segundos te decimos en español claro qué significa, cuánto pagas, cuándo, y qué pasa si no haces nada.
+    </p>
+    <div class="hero-cta">
+      <a href="#fundador" class="btn btn-primary">Reservar mi plaza Fundador, 49 €</a>
+      <a href="#demo" class="btn btn-secondary">Ver cómo funciona</a>
+    </div>
+    <div class="trust-row">
+      <span>🔒 No guardamos tus documentos</span>
+      <span>🇪🇸 Hecho en España</span>
+      <span>⚡ Resultado en 30 segundos</span>
+    </div>
+
+    <div class="demo" id="demo">
+      <div class="demo-tabs">
+        <div class="demo-tab before">Lo que te llega</div>
+        <div class="demo-tab after">Lo que entiendes</div>
+      </div>
+      <div class="demo-body">
+        <div class="demo-col before">
+          <p><strong>AGENCIA ESTATAL DE ADMINISTRACIÓN TRIBUTARIA</strong></p>
+          <p>Delegación Especial de Madrid · Administración de Salamanca</p>
+          <p style="margin:14px 0"><strong>PROVIDENCIA DE APREMIO</strong></p>
+          <p>De conformidad con lo establecido en el artículo 167 de la Ley 58/2003, de 17 de diciembre, General Tributaria, se procede a notificar la providencia de apremio dictada en el expediente de referencia, en virtud de la cual se exige el ingreso de las deudas tributarias pendientes, incrementadas con el recargo del 20% del importe de la deuda no ingresada en período voluntario, así como los intereses de demora devengados hasta la fecha del ingreso.</p>
+          <p>El plazo para efectuar el pago en período ejecutivo será el establecido en el artículo 62.5 de la citada Ley General Tributaria. Transcurrido dicho plazo sin haber satisfecho la deuda, se procederá al embargo de los bienes del deudor en cuantía suficiente para cubrir el importe del débito y las costas del procedimiento.</p>
+          <p>Importe principal: 847,32 €. Recargo de apremio: 169,46 €. Total adeudado: 1.016,78 €.</p>
+        </div>
+        <div class="demo-col after">
+          <div class="after-section">
+            <h4>🟢 En una frase</h4>
+            <p>Hacienda te reclama 1.016,78 € por un IVA que no pagaste a tiempo, y si no actúas en 15 días pueden embargarte la cuenta.</p>
+          </div>
+          <div class="after-section">
+            <h4>💶 ¿Cuánto pagas?</h4>
+            <p><span class="amount">1.016,78 €</span> total. Son <span class="key">847,32 €</span> de IVA pendiente más <span class="key">169,46 €</span> de recargo del 20%.</p>
+          </div>
+          <div class="after-section">
+            <h4>📅 Fecha límite</h4>
+            <p><span class="deadline">20/06/2026</span>, te quedan <span class="key">5 días hábiles</span>.</p>
+          </div>
+          <div class="after-section">
+            <h4>⚠️ Si no haces nada</h4>
+            <p>Hacienda embargará tu cuenta corriente, y si no hay saldo, irá a por tu facturación pendiente o tus bienes.</p>
+          </div>
+          <div class="after-section">
+            <h4>✅ Tus próximos pasos</h4>
+            <p>1. Entra en la <span class="key">sede.aeat.gob.es</span> con tu certificado digital.<br>2. Paga la carta con el número de justificante que viene en el documento.<br>3. Si no puedes pagar todo, solicita aplazamiento antes del 20/06.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-label">El problema</div>
+    <h2>Cada carta oficial es un día perdido.</h2>
+    <p class="section-sub">Los autónomos españoles pierden tiempo, dinero y sueño con notificaciones que ni los abogados entienden a la primera.</p>
+    <div class="problems">
+      <div class="problem-card">
+        <div class="problem-icon">😰</div>
+        <h3>Pánico instantáneo</h3>
+        <p>Recibes una carta de la AEAT un viernes a las 18:00. Tu gestor no responde hasta el lunes. Tres días de ansiedad sin saber si es grave.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">💸</div>
+        <h3>Multas evitables</h3>
+        <p>El 60% de las sanciones se generan por no responder a tiempo. Y no respondes a tiempo porque no entiendes qué te están pidiendo.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🌀</div>
+        <h3>Jerga imposible</h3>
+        <p>"Providencia de apremio en período ejecutivo". Tres palabras que cuestan 169 € de recargo si no sabes lo que significan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-label">Cómo funciona</div>
+    <h2>Tres pasos. Treinta segundos.</h2>
+    <p class="section-sub">Sin registros complicados, sin instalar nada, sin curso de derecho fiscal.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Sube el PDF</h3>
+        <p>Arrastra la carta que te ha llegado, o pega el texto si la tienes en el email. Aceptamos cualquier formato oficial.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>La IA lo traduce</h3>
+        <p>Nuestro motor analiza el documento, identifica el organismo, calcula plazos y extrae los importes exactos.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Sabes qué hacer</h3>
+        <p>Recibes un resumen en español claro: qué significa, cuánto pagar, cuándo, y qué pasa si no actúas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fundador-section" id="fundador">
+  <div class="container">
+    <div class="section-label">Oferta de lanzamiento</div>
+    <h2>Plan Fundador, una sola vez en la vida.</h2>
+    <p class="section-sub">Los primeros 100 usuarios que confíen en el proyecto, pagan una sola vez y usan la herramienta de por vida.</p>
+
+    <div class="fundador-card">
+      <div class="fundador-ribbon">Solo 100</div>
+      <div class="fundador-body">
+        <div class="fundador-eyebrow">Plan Fundador, acceso de por vida</div>
+        <div class="fundador-title">Una vez. Para siempre.</div>
+        <p class="fundador-desc">Paga 49 € hoy y usa Hola Hacienda el resto de tu vida como autónomo, sin cuotas mensuales, sin sorpresas, sin renovaciones.</p>
+
+        <div class="price-row">
+          <div class="price">49 €</div>
+          <div class="price-old">119 €/año</div>
+        </div>
+        <p class="price-tag">Pago único, IVA incluido. <strong>Ahorras 70 € el primer año.</strong></p>
+
+        <ul class="features">
+          <li><span class="check">✓</span><span><strong>Traducciones ilimitadas</strong> de cualquier notificación oficial española</span></li>
+          <li><span class="check">✓</span><span><strong>Alertas de calendario</strong> automáticas con las fechas límite detectadas</span></li>
+          <li><span class="check">✓</span><span><strong>Histórico privado</strong> de todos tus documentos traducidos</span></li>
+          <li><span class="check">✓</span><span><strong>Descarga en PDF</strong> el resumen para tu gestor o tu archivo</span></li>
+          <li><span class="check">✓</span><span><strong>Todas las funciones futuras</strong> que añadamos, gratis y para siempre</span></li>
+          <li><span class="check">✓</span><span><strong>Soporte directo</strong> con el fundador por email</span></li>
+        </ul>
+
+        <div class="spots">
+          🔥 23 de 100 plazas reservadas
+          <div class="spots-bar"><div class="spots-fill"></div></div>
+        </div>
+
+        <form class="email-form" id="form" action="https://formspree.io/f/maqzvpyn" method="POST">
+          <input type="email" name="email" placeholder="tu@email.com" required>
+          <input type="hidden" name="_subject" value="Nuevo Fundador en Hola Hacienda">
+          <input type="hidden" name="origen" value="Landing Hola Hacienda">
+          <button type="submit">Reservar plaza</button>
+        </form>
+        <p class="form-note">Te enviamos el enlace de pago en cuanto abramos. Cero spam, cancelas con un clic.</p>
+
+        <div class="success-msg" id="success">
+          ✅ ¡Reservado! Te escribimos en menos de 48h con el enlace de pago.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-label">Preguntas frecuentes</div>
+    <h2>Lo que te estás preguntando.</h2>
+    <div class="faq" style="margin-top:48px">
+      <div class="faq-item">
+        <div class="faq-q">¿Sustituye a mi gestor o a un abogado?</div>
+        <div class="faq-a">No, y nunca lo pretenderá. Hola Hacienda te ayuda a entender qué te ha llegado y a no perder fechas, pero las decisiones legales y fiscales importantes siempre debes consultarlas con un profesional colegiado. Lo que sí hacemos es que la consulta con tu gestor sea cinco veces más rápida y barata.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Qué tipos de documentos puedo subir?</div>
+        <div class="faq-a">Cualquier comunicación oficial española: AEAT (Hacienda), Seguridad Social, Tesorería, DGT, BOE, juzgados, ayuntamientos, comunidades autónomas y organismos públicos. PDFs, fotos del documento o texto pegado.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Es seguro? ¿Qué pasa con mis datos?</div>
+        <div class="faq-a">Los documentos se procesan en servidores en la UE y se borran automáticamente tras la traducción. No vendemos datos, no los compartimos, no los usamos para entrenar modelos. Cumplimos RGPD y la LOPDGDD española.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Por qué solo 100 plazas Fundador?</div>
+        <div class="faq-a">Porque los Fundadores acceden de por vida con una sola cuota, y el resto del mundo pagará 9,99 €/mes. Limitamos las plazas para que el modelo sea sostenible. Una vez agotadas, no se reabre.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Cuándo puedo usarlo?</div>
+        <div class="faq-a">Estamos en fase de pre-lanzamiento. Si reservas tu plaza ahora, recibirás acceso anticipado en menos de 30 días, antes que el lanzamiento público.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Y si no me convence?</div>
+        <div class="faq-a">Devolución del 100% del importe durante los primeros 14 días sin preguntas. Si no te resuelve un problema real, no queremos tu dinero.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p><strong>Hola Hacienda</strong> · El traductor de burocracia. Hecho en España con cariño y mucho café.</p>
+    <p>
+      <a href="#">Aviso legal</a> ·
+      <a href="#">Privacidad</a> ·
+      <a href="#">Contacto</a>
+    </p>
+    <p style="margin-top:16px;font-size:11px;max-width:600px;margin-left:auto;margin-right:auto">
+      Hola Hacienda es una herramienta de apoyo informativo basada en inteligencia artificial. No constituye asesoramiento jurídico, fiscal ni laboral, y no sustituye la consulta con profesionales colegiados.
+    </p>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.addEventListener('click',()=>item.classList.toggle('open'));
+});
+document.getElementById('form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('button');
+  const originalText = btn.textContent;
+  btn.textContent = 'Reservando...';
+  btn.disabled = true;
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (response.ok) {
+      form.style.display = 'none';
+      document.querySelector('.form-note').style.display = 'none';
+      document.getElementById('success').classList.add('show');
+    } else {
+      btn.textContent = originalText;
+      btn.disabled = false;
+      alert('No se pudo enviar. Intenta de nuevo en unos segundos.');
+    }
+  } catch (err) {
+    btn.textContent = originalText;
+    btn.disabled = false;
+    alert('Error de conexión. Revisa tu internet y vuelve a intentarlo.');
+  }
+});
+</script>
+
+</body>
+</html>
