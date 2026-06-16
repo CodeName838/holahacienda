@@ -251,13 +251,17 @@ footer strong{color:var(--ink)}
   <div id="app" style="display:none">
     <div class="app-intro">
       <h1>Sube tu notificación oficial</h1>
-      <p>Pega el texto o sube un PDF. Te lo traducimos en menos de 30 segundos.</p>
+      <p>Pega el texto o sube un PDF. Te lo traducimos en menos de 1 minuto.</p>
     </div>
 
     <div class="input-card">
       <div class="tab-row">
         <button class="tab active" data-tab="text" type="button">📝 Pegar texto</button>
         <button class="tab" data-tab="file" type="button">📎 Subir archivo</button>
+      </div>
+
+      <div style="background:var(--amber);color:var(--amber-dark);padding:10px 14px;border-radius:8px;font-size:12.5px;margin-bottom:14px;line-height:1.5">
+        ⚠️ <strong>No introduzcas documentos de terceros sin su permiso.</strong> Si tu documento contiene datos sensibles (NIF, IBAN, dirección), tachalos antes de procesarlo. El texto se envía a la API de Anthropic para generar la traducción, no se almacena en nuestros servidores.
       </div>
 
       <div id="tab-text">

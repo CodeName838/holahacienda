@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hola Hacienda · Entiende tu carta oficial en 30 segundos</title>
+<title>Hola Hacienda · Entiende tu carta oficial en menos de 1 minuto</title>
 <meta name="description" content="Sube tu notificación de Hacienda, Seguridad Social o el BOE y te decimos en español claro qué significa, cuánto pagas y cuándo. Adiós a la ansiedad burocrática.">
 <meta property="og:title" content="Hola Hacienda, el traductor de burocracia">
-<meta property="og:description" content="Entiende cualquier carta oficial en 30 segundos.">
+<meta property="og:description" content="Entiende cualquier carta oficial en menos de 1 minuto.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -310,16 +310,16 @@ footer a:hover{color:var(--green)}
     </div>
     <h1>Saluda a Hacienda<br>sin <span class="accent">miedo</span>.</h1>
     <p class="sub">
-      Sube la carta de la AEAT, Seguridad Social o el BOE, y en 30 segundos te decimos en español claro qué significa, cuánto pagas, cuándo, y qué pasa si no haces nada.
+      Sube la carta de la AEAT, Seguridad Social o el BOE, y entre 30 y 60 segundos te decimos en español claro qué significa, cuánto pagas, cuándo, y qué pasa si no haces nada.
     </p>
     <div class="hero-cta">
-      <a href="#fundador" class="btn btn-primary">Reservar mi plaza Fundador, 49 €</a>
+      <a href="#fundador" class="btn btn-primary">Reservar mi plaza Fundador por 49 €</a>
       <a href="#demo" class="btn btn-secondary">Ver cómo funciona</a>
     </div>
     <div class="trust-row">
       <span>🔒 No guardamos tus documentos</span>
       <span>🇪🇸 Hecho en España</span>
-      <span>⚡ Resultado en 30 segundos</span>
+      <span>⚡ Resultado en menos de 1 minuto</span>
     </div>
 
     <div class="demo" id="demo">
@@ -442,17 +442,28 @@ footer a:hover{color:var(--green)}
         </ul>
 
         <div class="spots">
-          🔥 23 de 100 plazas reservadas
-          <div class="spots-bar"><div class="spots-fill"></div></div>
+          🔥 Plazas Fundador limitadas a 100 · Cierra cuando se agoten
         </div>
 
         <form class="email-form" id="form" action="https://formspree.io/f/maqzvpyn" method="POST">
-          <input type="email" name="email" placeholder="tu@email.com" required>
+          <input
+            type="email"
+            name="email"
+            placeholder="tu@email.com"
+            required
+            autocomplete="email"
+            maxlength="120"
+            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+            spellcheck="false"
+            aria-label="Tu email para reservar plaza Fundador">
           <input type="hidden" name="_subject" value="Nuevo Fundador en Hola Hacienda">
           <input type="hidden" name="origen" value="Landing Hola Hacienda">
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button type="submit">Reservar plaza</button>
         </form>
         <p class="form-note">Te enviamos el enlace de pago en cuanto abramos. Cero spam, cancelas con un clic.</p>
+        <p class="form-note" style="margin-top:14px;color:var(--green-dark);font-weight:600;font-size:13px">🛡️ Garantía de devolución de 14 días sin preguntas. Si no te resuelve, te devolvemos los 49 €.</p>
+        <p class="form-note" style="margin-top:14px">¿Tienes dudas antes de reservar? <a href="mailto:towch666@gmail.com?subject=Pregunta%20sobre%20Hola%20Hacienda" style="color:var(--green-dark);font-weight:600;text-decoration:underline">Escríbeme directamente</a>.</p>
 
         <div class="success-msg" id="success">
           ✅ ¡Reservado! Te escribimos en menos de 48h con el enlace de pago.
@@ -499,9 +510,10 @@ footer a:hover{color:var(--green)}
   <div class="container">
     <p><strong>Hola Hacienda</strong> · El traductor de burocracia. Hecho en España con cariño y mucho café.</p>
     <p>
-      <a href="#">Aviso legal</a> ·
-      <a href="#">Privacidad</a> ·
-      <a href="#">Contacto</a>
+      <a href="aviso-legal.html">Aviso legal</a> ·
+      <a href="privacidad.html">Privacidad</a> ·
+      <a href="cookies.html">Cookies</a> ·
+      <a href="mailto:towch666@gmail.com?subject=Hola%20Hacienda">Contacto</a>
     </p>
     <p style="margin-top:16px;font-size:11px;max-width:600px;margin-left:auto;margin-right:auto">
       Hola Hacienda es una herramienta de apoyo informativo basada en inteligencia artificial. No constituye asesoramiento jurídico, fiscal ni laboral, y no sustituye la consulta con profesionales colegiados.
